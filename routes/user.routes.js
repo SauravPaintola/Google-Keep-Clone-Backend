@@ -9,6 +9,9 @@ console.log(JWT_SEC)
 
 const userRouter = express.Router()
 
+const options = {
+    expiresIn : "2m"
+}
 
 userRouter.post('/register', async (req, res) => { //register route created 
 
@@ -31,13 +34,13 @@ userRouter.post('/register', async (req, res) => { //register route created
                 password: hashedPassword
             })
 
-            const data = {
+            const data = {//taking a unique element from user to identify them
                 user: {
                     id: newUser.id
                 }
             }
 
-            const token = jwt.sign(data, JWT_SEC) // creating token with jwt to have a secure data transfer
+            const token = jwt.sign(data, JWT_SEC , options) // creating token with jwt to have a secure data transfer
             res.send({
                 "message": "user logged in successfully",
                 "token": token,

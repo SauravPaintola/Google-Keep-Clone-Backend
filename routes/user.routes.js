@@ -42,21 +42,33 @@ userRouter.post('/register', async (req, res) => {
 
 })
 
-userRouter.post('/login', async () => {
+userRouter.post('/login', async (req, res) => {
     try {
-
-        if (await userModel.findOne({ email: req.body.email })) {
-
-        }
-
-        else {
+        const { email, password } = req.body
+        const user = await userModel.findOne({ email: email })
+        if (!user) {
             res.status(400).send({
-                "error": "Please try to login with credential"
+                "error": "Please try to login with correct credential"
             })
         }
 
-    } catch (error) {
+        else {
+            console.log("else chla");
+            const passCompare = await bcrypt.compare(password, user.password)
+            console.log(passCompare)
+            if (!passCompare) {
+                res.status(400).send({
+                    "error": "Please try to login with correct credential"
+                })
 
+            }
+            else {
+                res.send("user logged in successfully")
+            }
+        }
+
+    } catch (error) {
+        res.send(error)
     }
 })
 

@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWT_SEC = process.env.JWT_SEC //taking data from .env
 
@@ -8,7 +7,7 @@ const auth = (req, res, next) => {
     const token = req.header('auth-token')//getting auth-token from incoming req header
 
     if (!token) {
-        res.status(401).send("Invalid Token")
+        return res.status(401).send("Invalid Token")
     }
 
     try {
@@ -16,7 +15,7 @@ const auth = (req, res, next) => {
         req.user = data.user
     }
     catch (err) {
-        res.status(401).send(err)
+        return res.status(401).send("Invalid Token")
     }
 
     next()

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config(); //requiring dotenv to take data from .env file
 const JWT_SEC = process.env.JWT_SEC //taking data from .env
 
-console.log(JWT_SEC)
+console.log(JWT_SEC) 
 
 const userRouter = express.Router()
 
